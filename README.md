@@ -1,4 +1,4 @@
-
+This application uses serverless technology.  It does so to utilize on-demand processing and scalability.  It is cost effective and there is no need for server maintenance.  As a single-developer app, it allows the developer fewer things to create and maintain.
   
 **As a**: user<br>
   **I should be able to**: filter events by city<br>
@@ -14,7 +14,7 @@
   **So that**: I can see more or fewer events in the events list at once.
 
 
-**As** a**: user<br>
+**As a**: user<br>
   **I should be able to**: use the app when offline<br>
   **So that**: I can see the events I viewed the last time I was online.
 
