@@ -50,7 +50,7 @@ module.exports.getAccessToken = async (event) => {
                 return reject(error);
             }
             console.log('oAuth2Client successful');
-            return response;
+            return resolve(response);
         });
     }).then((results) => {
         //Respond with the OAuth token
