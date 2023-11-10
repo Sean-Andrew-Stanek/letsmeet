@@ -73,6 +73,7 @@ module.exports.getAccessToken = async (event) => {
 };
 
 module.exports.getCalendarEvents = async (event) => {
+    console.log('inside get Calendar Events');
     const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
     
     oAuth2Client.setCredentials({access_token});
@@ -88,12 +89,15 @@ module.exports.getCalendarEvents = async (event) => {
             },
             (error, response) => {
                 if (error) {
+                    console.log('calendar error');
                     return reject(error);
                 } 
+                console.log('calendar successs');
                 return resolve(response);
             }
         );
     }).then((results) => {
+        console.log(results);
         return {
             statusCode: 200,
             headers: {
@@ -103,6 +107,7 @@ module.exports.getCalendarEvents = async (event) => {
             body: JSON.stringify({events: results.data.items}),
         };
     }).catch((error) =>{
+        console.log('get calendar error');
         return {
             statusCode: 500,
             body: JSON.stringify(error),

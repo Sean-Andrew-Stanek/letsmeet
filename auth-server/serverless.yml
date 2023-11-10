@@ -10,8 +10,6 @@ provider:
 #overwrite defaults
   region: ap-northeast-3
   timeout: 30
-  apiGateway:
-    restApiId: 
   environment:
     CLIENT_ID: ${file(./config.json):CLIENT_ID}
     CLIENT_SECRET: ${file(./config.json):CLIENT_SECRET}
