@@ -8,8 +8,10 @@ provider:
   name: aws
   runtime: nodejs18.x
 #overwrite defaults
-  region: ap-northeast-2
+  region: ap-northeast-3
   timeout: 30
+  apiGateway:
+    restApiId: 
   environment:
     CLIENT_ID: ${file(./config.json):CLIENT_ID}
     CLIENT_SECRET: ${file(./config.json):CLIENT_SECRET}
@@ -27,4 +29,10 @@ functions:
     events:
         - http:
             path: api/token/{code}
+            method: get
+  getCalendarEvents:
+    handler: handler.getCalendarEvents
+    events:
+        - http:
+            path: api/get-calendar-events/{access_token}
             method: get
