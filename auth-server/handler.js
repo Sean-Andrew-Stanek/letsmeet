@@ -1,7 +1,5 @@
 /* eslint-env node */
 
-'use strict';
-
 const {google} = require('googleapis');
 const calendar = google.calendar('v3');
 const SCOPES = ['https://www.googleapis.com/auth/calendar.events.public.readonly'];
