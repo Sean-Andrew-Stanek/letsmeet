@@ -16,7 +16,5 @@ describe('<App /> component', () =>{
         expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
     })
 
-
-
 });
 
