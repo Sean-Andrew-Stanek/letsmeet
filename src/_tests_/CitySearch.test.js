@@ -4,13 +4,15 @@ import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 
 describe('CitySearch component', () => {
+    beforeEach(() => {
+        render(<CitySearch />);
+    })
     
     //AT START
     //EXPECT COMP:  textbox
     //WITH CLASS:   'city'
     test('Renders text input.', () => {
-        const CitySearchComponent = render(<CitySearch />);
-        const cityTextBox = CitySearchComponent.queryByRole('textbox');
+        const cityTextBox = screen.queryByRole('textbox');
         expect(cityTextBox).toBeInTheDocument();
         expect(cityTextBox).toHaveClass('city');
     });
@@ -18,7 +20,6 @@ describe('CitySearch component', () => {
     //AT START
     //UNEXPECT COMP:    List
     test('Suggestion list is hidden by default', () => {
-        render(<CitySearch />);
         const suggestionList = screen.queryByRole('list');
         expect(suggestionList).not.toBeInTheDocument();
     })
@@ -27,7 +28,6 @@ describe('CitySearch component', () => {
     // EXPECT COMP:     SuggestionList.js
     // WITH CLASS:      'suggestions'
     test('Renders a list of suggestions when the cityTextBox gains focus', async () => {
-        render(<CitySearch />);
         const user = userEvent.setup();
         await user.click(screen.queryByRole('textbox'));
         const suggestionList = screen.queryByRole('list');
