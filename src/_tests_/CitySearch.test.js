@@ -38,7 +38,7 @@ describe('CitySearch component', () => {
     // LONG TEST / SEE INSIDE
     test('updates the list of suggestions correctly when user types in the cityTextBox', async() =>{
         const user = userEvent.setup();
-        const allEvents = await getEvents();
+        const allEvents = await getTestEvents();
         const allLocations = extractLocations(allEvents);
         screen.rerender(<CitySearch allLocations = {allLocations} />);
 

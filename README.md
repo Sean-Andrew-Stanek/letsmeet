@@ -27,3 +27,9 @@ This application uses serverless technology.  It does so to utilize on-demand pr
 **As a**: user<br>
   **I should be able to**: see a chart showing the upcoming events in each city<br>
   **So that**: I know what events are organized in which city.
+
+
+NEXT TIME:
+
+Branch when adding tests per component
+
