@@ -1,5 +1,5 @@
 
-import testEventData from 'testEventData.js';
+import testEventData from './testEventData.js';
 
 /*
 *   REQ_PARAM:  List of events
@@ -9,9 +9,10 @@ import testEventData from 'testEventData.js';
 *   RETURNING   remaining event locations
 */
 export const extractLocations = (events) => {
-    const locations = events.map((event) => event.location);
-    return [...new Set(locations)];
-}
+    const extractedLocations = events.map((event) => event.location);
+    const locations = [...new Set(extractedLocations)];
+    return locations;
+};
 
 /*
 *   FETCH:      data

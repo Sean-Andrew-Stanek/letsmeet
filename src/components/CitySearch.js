@@ -9,11 +9,17 @@ const CitySearch = ( {allLocations}) => {
     const handleInputChanged = (event) => {
         const eventValue = event.target.value;
         const filteredLocations = allLocations ? allLocations.filter((location) => {
-            return location.toLowerCase().indexOf(value.toLowerCase()) > -1;
+            return location.toLowerCase().indexOf(eventValue.toLowerCase()) > -1;
         }) : [];
 
         setQuery(eventValue);
         setSuggestions(filteredLocations);
+    };
+
+    const handleItemClicked = (event) => {
+        const eventValue = event.target.textContent;
+        setQuery(eventValue);
+        setShowSuggestions(false);
     };
 
     return (
@@ -31,9 +37,9 @@ const CitySearch = ( {allLocations}) => {
                     className='suggestions'
                 >
                     {suggestions.map((suggestion) => {
-                        return <li key={suggestion}> {suggestion} </li>
+                        return <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
                     })}
-                    <li key='See all cities'>
+                    <li key='See all cities' onClick={handleItemClicked}>
                         <b>See All Cities</b>
                     </li>
                 </ul>

@@ -5,15 +5,16 @@ import CitySearch from '../components/CitySearch';
 import { getTestEvents, extractLocations } from '../api';
 
 describe('CitySearch component', () => {
+    let CitySearchComponent
     beforeEach(() => {
-        render(<CitySearch />);
+        CitySearchComponent = render(<CitySearch />);
     })
     
     //AT START
     //EXPECT COMP:  textbox
     //WITH CLASS:   'city'
     test('Renders text input.', () => {
-        const cityTextBox = screen.queryByRole('textbox');
+        const cityTextBox = CitySearchComponent.queryByRole('textbox');
         expect(cityTextBox).toBeInTheDocument();
         expect(cityTextBox).toHaveClass('city');
     });
@@ -21,7 +22,7 @@ describe('CitySearch component', () => {
     //AT START
     //UNEXPECT COMP:    List
     test('Suggestion list is hidden by default', () => {
-        const suggestionList = screen.queryByRole('list');
+        const suggestionList = CitySearchComponent.queryByRole('list');
         expect(suggestionList).not.toBeInTheDocument();
     })
 
@@ -30,8 +31,8 @@ describe('CitySearch component', () => {
     // WITH CLASS:      'suggestions'
     test('Renders a list of suggestions when the cityTextBox gains focus', async () => {
         const user = userEvent.setup();
-        await user.click(screen.queryByRole('textbox'));
-        const suggestionList = screen.queryByRole('list');
+        await user.click(CitySearchComponent.queryByRole('textbox'));
+        const suggestionList = CitySearchComponent.queryByRole('list');
         expect(suggestionList).toBeInTheDocument();
         expect(suggestionList).toHaveClass('suggestions');
     });
@@ -41,11 +42,12 @@ describe('CitySearch component', () => {
         const user = userEvent.setup();
         const allEvents = await getTestEvents();
         const allLocations = extractLocations(allEvents);
-        screen.rerender(<CitySearch allLocations = {allLocations} />);
+
+        CitySearchComponent.rerender(<CitySearch allLocations = {allLocations} />);
 
         // WHEN USER:   Inputs 'Berlin'
         // IN COMP:     'textbox'
-        const cityTextBox = screen.queryByRole('textbox');
+        const cityTextBox = CitySearchComponent.queryByRole('textbox');
         await user.type(cityTextBox, 'Berlin');
 
         // FILTER:          All locations
@@ -58,14 +60,33 @@ describe('CitySearch component', () => {
         // WITH LENGTH      Filtered locations + 1
         // FOR EACH         ListItem in parent component
         // EXPECT           Text equals suggestion of equal index
-        const suggestionListItems = screen.queryAllByRole('listitem');
+        const suggestionListItems = CitySearchComponent.queryAllByRole('listitem');
         expect(suggestionListItems).toHaveLength(suggestions.length + 1);
         for(let i = 0; i<suggestions.length; i++) {
             expect(suggestionListItems[i].textContent).toBe(suggestions[i])
         }
 
-    })
+    });
+
+    // LONG TEST / SEE INSIDE
+    test('Renders the suggestion text in the cityTextBox after clicking the suggestion', async() => {
+        const user = userEvent.setup();
+        const allEvents = await getTestEvents();
+        const allLocations = extractLocations(allEvents);
+        CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+
+        // WHEN USER:   Inputs 'Berlin'
+        // IN COMP:     'textbox'
+        const cityTextBox = CitySearchComponent.queryByRole('textbox');
+        await user.type(cityTextBox, 'Berlin');
+
+        // WHEN USER:   Clicks the first listitem
+        // IN COMP:     list
+        const firstSuggested = CitySearchComponent.queryAllByRole('listitem')[0];
+        await user.click(firstSuggested);
+
+        //EXPECT        Text equals user input
+        expect(cityTextBox).toHaveValue(firstSuggested.textContent);
+    });
+
 });
-
-
-
