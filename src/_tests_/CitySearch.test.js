@@ -34,6 +34,36 @@ describe('CitySearch component', () => {
         expect(suggestionList).toBeInTheDocument();
         expect(suggestionList).toHaveClass('suggestions');
     });
+
+    // LONG TEST / SEE INSIDE
+    test('updates the list of suggestions correctly when user types in the cityTextBox', async() =>{
+        const user = userEvent.setup();
+        const allEvents = await getEvents();
+        const allLocations = extractLocations(allEvents);
+        screen.rerender(<CitySearch allLocations = {allLocations} />);
+
+        // WHEN USER:   Inputs 'Berlin'
+        // IN COMP:     'textbox'
+        const cityTextBox = screen.queryByRole('textbox');
+        await user.type(cityTextBox, 'Berlin');
+
+        // FILTER:          All locations
+        // WHICH CONTAIN:   BERLILN
+        const suggestions = allLocations ? allLocations.filter((location) => {
+            return location.toLowerCase().indexOf(cityTextBox.value.toLowerCase()) > -1;
+        }): [];
+
+        // EXPECT COMP:     ListItems
+        // WITH LENGTH      Filtered locations + 1
+        // FOR EACH         ListItem in parent component
+        // EXPECT           Text equals suggestion of equal index
+        const suggestionListItems = screen.queryAllByRole('listitem');
+        expect(suggestionListItems).toHaveLength(suggestions.length + 1);
+        for(let i = 0; i<suggestions.length; i++) {
+            expect(suggestionListItems[i].textContent).toBe(suggestions[i])
+        }
+
+    })
 });
 
 
