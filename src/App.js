@@ -13,6 +13,7 @@ function App() {
         <div className="App">
             <CitySearch 
                 allLocations = {allLocations}/>
+            
             <EventList />
         </div>
   );

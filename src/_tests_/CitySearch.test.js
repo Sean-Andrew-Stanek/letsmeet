@@ -88,7 +88,5 @@ describe('CitySearch component', () => {
         //EXPECT        Text equals user input
         expect(cityTextBox).toHaveValue(firstSuggested.textContent);
     });
-
     
-
 });
