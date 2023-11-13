@@ -4,8 +4,6 @@ import { getTestEvents } from '../api';
 
 describe('<EventList /> component', () => {
     
-
-
     test('Has an element with the "list" role', () => {
         render(<EventList />);
         expect(screen.queryByRole('list')).toBeInTheDocument();
@@ -17,5 +15,9 @@ describe('<EventList /> component', () => {
         expect(screen.getAllByRole('listitem')).toHaveLength(allEvents.length);
     });
 
-});
 
+
+
+
+
+});

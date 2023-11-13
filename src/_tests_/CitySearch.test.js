@@ -89,4 +89,6 @@ describe('CitySearch component', () => {
         expect(cityTextBox).toHaveValue(firstSuggested.textContent);
     });
 
+    
+
 });
