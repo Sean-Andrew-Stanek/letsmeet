@@ -14,7 +14,7 @@ function App() {
             <CitySearch 
                 allLocations = {allLocations}/>
             
-            <EventList />
+            <EventList events = {testEventData}/>
         </div>
   );
 }

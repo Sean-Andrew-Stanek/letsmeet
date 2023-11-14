@@ -1,5 +1,5 @@
 import Event from './Event';
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 
 const EventList = ({events, maxEventCount}) => {
     return (
@@ -16,9 +16,9 @@ const EventList = ({events, maxEventCount}) => {
     );
 }
 
-EventList.protoTypes = {
-    event: PropTypes.shape({}).isRequired,
-    maxEventCount: PropTypes.instanceOf(number),
+EventList.propTypes = {
+    events: PropTypes.array.isRequired,
+    maxEventCount: PropTypes.number,
 };
 
 export default EventList;
