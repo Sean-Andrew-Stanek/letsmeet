@@ -1,6 +1,7 @@
  import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const CitySearch = ( {allLocations}) => {
+const CitySearch = ( {allLocations, setSelectedCity}) => {
     
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState("");
@@ -20,6 +21,8 @@ const CitySearch = ( {allLocations}) => {
         const eventValue = event.target.textContent;
         setQuery(eventValue);
         setShowSuggestions(false);
+        if(setSelectedCity)
+            setSelectedCity(event.target.textContent);
     };
 
     return (
@@ -50,3 +53,8 @@ const CitySearch = ( {allLocations}) => {
 }
 
  export default CitySearch;
+
+ CitySearch.propTypes = {
+    allLocations: PropTypes.array.isRequired,
+    setSelectedCity: PropTypes.func,
+ }

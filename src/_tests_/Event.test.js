@@ -1,7 +1,7 @@
 import {getByRole, queryByRole, render, screen} from '@testing-library/react';
 import Event from '../components/Event';
 import { getTestEvents, extractLocations } from '../api';
-
+import userEvent from '@testing-library/user-event';
 
 
 describe('<Event /> Component', () => {
@@ -18,40 +18,36 @@ describe('<Event /> Component', () => {
 
     //AT START          (collapsed)
     //EXPECT COMP:      button
+    //EXPECT COMP:      Summary Div
+    //TODO:             Check for all variables
     test('Test Feature 2.3: There is a collapse button', () => {
-        expect((EventComponent.queryByRole('button')).toBeInTheDocument());
+        expect(EventComponent.queryByRole('button')).toBeInTheDocument();
     });
-    //EXPECT COMP:      a singel h2 with event.summary
-    test('Test Feature 2.3: There is an h2 with the event summary', () => {
-        expect(EventComponent.getByRole('heading', {level:2}).textContent.toBe(`${testEvent}`))
+
+    test('Test Feature 2.3: Shows a summary even when collapsed', () => {
+        expect(EventComponent.getByTestId('event-summary')).toBeInTheDocument();
     });
-    //EXPECT COMP:      text in format {event.start.dateTime<br>{event.summary}{event.location}
-    test('Test Feature 2.3: There is a time, summary and location within the collapsed mode', () => {
-        let expectedString = `${testEvent.start.dateTime}<br>${testEvent.summary}${testEvent.location}`
-        expect(EventComponent.getByText(expectedString).toBeInTheDocument())
+
+    //AT START
+    //AND WHEN
+    //EXPECT COMP:      BUTTON
+    //TEXT:             Show Details
+    //UNEXPECT COMP:    details
+    test('Details are hidden when the button"s text is show details', () => {
+        expect(EventComponent.queryByTestId('event-details')).toBeNull();
+        expect(EventComponent.queryByText('Show Details')).toBeInTheDocument();
     });
-    //UNEXPECT COMP:    H3
-    test('There are no h3s', () => {
-        expect(EventComponent.queryByRole('heading', {level:3})).toBeNull()
+
+    //WHEN USER:        Clicks button
+    //EXPECT COMP:      details
+    //EXPECT COMP:      BUTTON
+    //TEXT:             Hide Details
+    //TODO:             Check for all details
+    test('Details are hidden when the button"s text is show details', async() => {
+        const user = userEvent.setup();
+        await user.click(EventComponent.queryByRole('button'));
+        expect(EventComponent.getByTestId('event-details')).toBeInTheDocument();
+        expect(EventComponent.queryByText('Hide Details')).toBeInTheDocument();
     });
-    //UNEXPECT COMP:    Anchors
-    test('There are no links such as <a>', () => {
-        expect(EventComponent.queryByRole('link')).toBeNull();
-    });
-    //UNEXPECT TEXT:    {event.description}
-    test('There is no long event descriptions', () => {
-        expect(EventComponent.queryByText(`${testEvent.description}`)).toBeNull();
-    })
 
 });
-//The user can click open
-//The event details of the specified event are opened
-//<h2>{event.summary}
-//text: {event.start.dateTime<br>{event.summary}{event.location}}
-//<h3>About event:<br><br>
-//<a href = {event.htmlEvent}>See details on Google Calendar</a><br><br>
-//text: {event.description}
-
-
-//The user can then click close
-//The even details of the specified event are then not displayed
