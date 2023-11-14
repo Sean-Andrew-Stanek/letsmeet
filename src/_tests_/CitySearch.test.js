@@ -6,8 +6,13 @@ import { getTestEvents, extractLocations } from '../api';
 
 describe('CitySearch component', () => {
     let CitySearchComponent
-    beforeEach(() => {
-        CitySearchComponent = render(<CitySearch />);
+    let allEvents;
+    let allLocations;
+    
+    beforeEach(async() => {
+        allEvents = await getTestEvents()
+        allLocations = extractLocations(allEvents)
+        CitySearchComponent = render(<CitySearch allLocations={allLocations} />);
     })
     
     //AT START
@@ -40,10 +45,6 @@ describe('CitySearch component', () => {
     // LONG TEST / SEE INSIDE
     test('updates the list of suggestions correctly when user types in the cityTextBox', async() =>{
         const user = userEvent.setup();
-        const allEvents = await getTestEvents();
-        const allLocations = extractLocations(allEvents);
-
-        CitySearchComponent.rerender(<CitySearch allLocations = {allLocations} />);
 
         // WHEN USER:   Inputs 'Berlin'
         // IN COMP:     'textbox'
@@ -88,5 +89,5 @@ describe('CitySearch component', () => {
         //EXPECT        Text equals user input
         expect(cityTextBox).toHaveValue(firstSuggested.textContent);
     });
-
+    
 });

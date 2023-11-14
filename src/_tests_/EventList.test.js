@@ -1,21 +1,34 @@
-import {render, screen} from '@testing-library/react';
+import {rerender, render, screen, waitFor} from '@testing-library/react';
 import EventList from '../components/EventList';
 import { getTestEvents } from '../api';
 
 describe('<EventList /> component', () => {
-    
+    let allEvents;
+    let EventListComponent;
 
+    beforeEach(async() => {
+        allEvents = await getTestEvents();
+        EventListComponent = render(<EventList events={allEvents} />);
+    })
 
+    //AT START
+    //EXPECT COMP:  list
     test('Has an element with the "list" role', () => {
-        render(<EventList />);
-        expect(screen.queryByRole('list')).toBeInTheDocument();
+        expect(EventListComponent.queryByRole('list')).toBeInTheDocument();
     });
 
-    test('Renders the correct number of Events.', async () => {
-        const allEvents = await getTestEvents();
-        render(<EventList events={allEvents} />);
-        expect(screen.getAllByRole('listitem')).toHaveLength(allEvents.length);
+    //AT START / No Input
+    //EXPECT COMP:  listItems equal to 30 when no number specified
+    test('Renders 32 Events when no number is specified.', async () => {
+        expect(EventListComponent.getAllByRole('listitem')).toHaveLength(32);
+    });
+
+    //When there is a maxNumber passed, it shows a smaller number of events.
+    test('Renders one event when asked for one event', async() => {
+        EventListComponent.rerender(<EventList events={allEvents} resultCount={1} />);
+        await waitFor(() => {
+            expect(EventListComponent.getAllByRole('listitem')).toHaveLength(1);
+        });
     });
 
 });
-
