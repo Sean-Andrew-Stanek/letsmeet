@@ -9,6 +9,7 @@ const EventList = ({events, resultCount, selectedCity}) => {
 
     useEffect(() => {
         let newFilteredEvents = events;
+        //UNTESTED
         if(selectedCity)
             newFilteredEvents = newFilteredEvents.filter((event) => (event.location === selectedCity));
         
