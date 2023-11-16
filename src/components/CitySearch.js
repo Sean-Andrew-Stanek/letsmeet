@@ -1,14 +1,17 @@
- import { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const CitySearch = ( {allLocations, setSelectedCity}) => {
+
+    const allCitiesString = 'See All Cities';
     
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
 
     const handleInputChanged = (event) => {
-        const eventValue = event.target.value;
+        let eventValue = event.target.value;
+
         const filteredLocations = allLocations ? allLocations.filter((location) => {
             return location.toLowerCase().indexOf(eventValue.toLowerCase()) > -1;
         }) : [];
@@ -44,7 +47,7 @@ const CitySearch = ( {allLocations, setSelectedCity}) => {
                         return <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
                     })}
                     <li key='See all cities' onClick={handleItemClicked}>
-                        <b>See All Cities</b>
+                        <b>{allCitiesString}</b>
                     </li>
                 </ul>
                 :null}

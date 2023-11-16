@@ -1,6 +1,6 @@
 import {getByRole, queryByRole, render, screen} from '@testing-library/react';
 import Event from '../components/Event';
-import { getTestEvents, extractLocations } from '../api';
+import { getEvents, extractLocations } from '../api';
 import userEvent from '@testing-library/user-event';
 
 
@@ -9,7 +9,7 @@ describe('<Event /> Component', () => {
     let testEvent;
 
     beforeEach(async() => {
-        let testEventArray = await getTestEvents();
+        let testEventArray = await getEvents();
         testEvent = testEventArray[0];
         EventComponent = render(<Event event={testEvent}/>)
     })

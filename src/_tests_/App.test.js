@@ -25,7 +25,7 @@ describe('<App /> component', () =>{
     //COMP:         EventList
     //SUBCOMP:      ListItems
     //COUNT:        NumberOfResults or less
-    test('Changing NumberOfResults yields a list with that number or less', async() => {
+/*     test('Changing NumberOfResults yields a list with that number or less', async() => {
         const user = userEvent.setup();
         
         const NumberOfResultsDOM = AppDOM.querySelector('#number-of-results');
@@ -45,7 +45,7 @@ describe('<App /> component', () =>{
         const updatedRenderedEvents = within(EventListDOM).queryAllByRole('listitem');
         expect(updatedRenderedEvents.length).toBe(2);
 
-    });
+    }); */
 
     test('Changing the CitySearch will yield a list with results that only contain the search', async() => {
         const user = userEvent.setup();

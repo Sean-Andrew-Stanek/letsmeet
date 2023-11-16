@@ -4,14 +4,19 @@ import { useState, useEffect } from 'react';
 
 
 const EventList = ({events, resultCount, selectedCity}) => {
+    
+    const allCitiesString = 'See All Cities';
 
     let [filteredEvents, setFilteredEvents] = useState(events.slice(0,resultCount));
 
     useEffect(() => {
         let newFilteredEvents = events;
-        //UNTESTED
-        if(selectedCity)
-            newFilteredEvents = newFilteredEvents.filter((event) => (event.location === selectedCity));
+        let filterString = selectedCity;
+
+        if(selectedCity===allCitiesString)
+            newFilteredEvents = events
+        else
+            newFilteredEvents = newFilteredEvents.filter((event) => (event.location === filterString));
         
         newFilteredEvents = newFilteredEvents.slice(0,resultCount);
         

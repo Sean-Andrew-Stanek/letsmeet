@@ -11,7 +11,7 @@ describe('CitySearch component', () => {
     
     beforeEach(async() => {
         allEvents = await getEvents()
-        allLocations = extractLocations(allEvents)
+        allLocations = await extractLocations(allEvents)
         CitySearchComponent = render(<CitySearch allLocations={allLocations} />);
     })
     
@@ -73,7 +73,7 @@ describe('CitySearch component', () => {
     test('Renders the suggestion text in the cityTextBox after clicking the suggestion', async() => {
         const user = userEvent.setup();
         const allEvents = await getEvents();
-        const allLocations = extractLocations(allEvents);
+        const allLocations = await extractLocations(allEvents);
         CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
 
         // WHEN USER:   Inputs 'Berlin'

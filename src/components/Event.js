@@ -12,7 +12,7 @@ const Event = (event) => {
     //This can be changed to a new style of date
     const formattedDate = new Date(event.event.start.dateTime).toLocaleDateString();
     return (
-        <div role="listitem">
+        <div role="listitem" className='event'>
             <div data-testid='event-summary'>
                 <h2>{event.event.summary}</h2><br/><br/>
                 {formattedDate}<br/>@{event.event.summary} | {event.event.location}
@@ -24,7 +24,7 @@ const Event = (event) => {
                         {event.event.description}
                     </div>
             )}
-            <button onClick={handleClick}>
+            <button className='details-btn' onClick={handleClick}>
                 {isCollapsed?'Show Details':'Hide Details'}
             </button>
         </div>
