@@ -1,13 +1,13 @@
 import {rerender, render, screen, waitFor} from '@testing-library/react';
 import EventList from '../components/EventList';
-import { getTestEvents } from '../api';
+import { getEvents } from '../api';
 
 describe('<EventList /> component', () => {
     let allEvents;
     let EventListComponent;
 
     beforeEach(async() => {
-        allEvents = await getTestEvents();
+        allEvents = await getEvents();
         EventListComponent = render(<EventList events={allEvents} />);
     })
 

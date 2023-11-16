@@ -1,7 +1,7 @@
 import {render, within} from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
-import { getTestEvents } from '../api';
+import { getEvents } from '../api';
 
 describe('<App /> component', () =>{
 
@@ -55,7 +55,7 @@ describe('<App /> component', () =>{
         const CitySearchDOM = AppDOM.querySelector('#city-search');
         const citySearchTextbox = within(CitySearchDOM).queryByRole('textbox');
 
-        const allEvents = await getTestEvents();
+        const allEvents = await getEvents();
 
         //USER:         Allows 9999 results
         const NumberOfResultsDOM = AppDOM.querySelector('#number-of-results');

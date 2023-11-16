@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { extractLocations } from './api';
+import { extractLocations, getEvents } from './api';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfResults from './components/NumberOfResults';
@@ -13,7 +13,8 @@ function App() {
     const [selectedCity, setSelectedCity] = useState('');
 
     // Needs to be async when we extract the real data
-    const allLocations = extractLocations(testEventData);
+    const allEvents = getEvents();
+    const allLocations = extractLocations(allEvents);
     
     return (
         <div className="App">
@@ -25,7 +26,7 @@ function App() {
                 numberOfResults = {(resultCount) => setResultCount(resultCount)}
             />
             <EventList 
-                events = {testEventData}
+                events = {allEvents}
                 resultCount = {resultCount}
                 selectedCity = {selectedCity}/>
         </div>

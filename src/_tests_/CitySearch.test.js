@@ -2,7 +2,7 @@
 import {render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
-import { getTestEvents, extractLocations } from '../api';
+import { getEvents, extractLocations } from '../api';
 
 describe('CitySearch component', () => {
     let CitySearchComponent
@@ -10,7 +10,7 @@ describe('CitySearch component', () => {
     let allLocations;
     
     beforeEach(async() => {
-        allEvents = await getTestEvents()
+        allEvents = await getEvents()
         allLocations = extractLocations(allEvents)
         CitySearchComponent = render(<CitySearch allLocations={allLocations} />);
     })
@@ -72,7 +72,7 @@ describe('CitySearch component', () => {
     // LONG TEST / SEE INSIDE
     test('Renders the suggestion text in the cityTextBox after clicking the suggestion', async() => {
         const user = userEvent.setup();
-        const allEvents = await getTestEvents();
+        const allEvents = await getEvents();
         const allLocations = extractLocations(allEvents);
         CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
 
