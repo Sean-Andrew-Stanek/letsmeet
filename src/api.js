@@ -14,6 +14,8 @@ export const extractLocations = (events) => {
     return locations;
 };
 
+
+
 /*
 *   FETCH:      data
 *   FROM:       testEventData.js

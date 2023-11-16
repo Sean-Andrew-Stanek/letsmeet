@@ -21,6 +21,7 @@ const CitySearch = ( {allLocations, setSelectedCity}) => {
         const eventValue = event.target.textContent;
         setQuery(eventValue);
         setShowSuggestions(false);
+        //THIS IS ONLY FOR THE TEST, WE SHOULD ADD TO PROPTYPES
         if(setSelectedCity)
             setSelectedCity(event.target.textContent);
     };

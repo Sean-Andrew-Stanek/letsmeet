@@ -2,19 +2,20 @@
 import {useState} from 'react';
 import PropTypes from 'prop-types';
 
-const NumberOfResults = (setResultCount) => {
+const NumberOfResults = ({numberOfResults}) => {
 
     const [inputText, setInputText] = useState(32);
 
     const handleInputChanged = (event) => {
-        const eventValue = event.target.value;
         
-        setResultCount(eventValue);
+        const eventValue = event.target.value;
+        numberOfResults(parseInt(eventValue, 10));
         setInputText(eventValue);
+
     }
 
     return (
-        <form>
+        <form id="number-of-results">
             <label>Number of Results</label><br/>
             <input 
                 type='text'
