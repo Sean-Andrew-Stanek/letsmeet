@@ -1,32 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { extractLocations, getEvents } from './api';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfResults from './components/NumberOfResults';
-import testEventData from './testEventData';
-
 
 function App() {
 
     const [resultCount, setResultCount] = useState(32);
     const [selectedCity, setSelectedCity] = useState('');
+    const [events, setEvents] = useState([]);
+    const [locations, setLocations] = useState([]);
 
-    // Needs to be async when we extract the real data
-    const allEvents = getEvents();
-    const allLocations = extractLocations(allEvents);
+    const fetchData = async () => {
+        const allEvents = await getEvents();
+        setLocations(await extractLocations(allEvents));
+        setEvents(allEvents);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+    
     
     return (
         <div className="App">
             <CitySearch 
-                allLocations = {allLocations}
+                allLocations = {locations}
                 setSelectedCity = {(selectedCity) => setSelectedCity(selectedCity)}
                 />
             <NumberOfResults
                 numberOfResults = {(resultCount) => setResultCount(resultCount)}
             />
             <EventList 
-                events = {allEvents}
+                events = {events}
                 resultCount = {resultCount}
                 selectedCity = {selectedCity}/>
         </div>

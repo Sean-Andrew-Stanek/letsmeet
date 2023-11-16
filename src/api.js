@@ -8,7 +8,8 @@ import testEventData from './testEventData.js';
 *   ERASING:    duplicates
 *   RETURNING   remaining event locations
 */
-export const extractLocations = (events) => {
+export const extractLocations = async(eventsPromise) => {
+    const events = eventsPromise;
     const extractedLocations = events.map((event) => event.location);
     const locations = [...new Set(extractedLocations)];
     return locations;
@@ -36,11 +37,16 @@ export const getAccessToken = async () => {
 };
 
 const checkToken = async (accessToken) => {
-    const response = await fetch(
-        `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
-    );
-    const result = await response.json;
-    return result;
+    try{
+        const response = await fetch(
+            `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+        );
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Error checking token', error);
+        return { error: 'Failed to check token'};
+    }
 
 };
 
@@ -58,7 +64,7 @@ const getToken = async (code) => {
 *   FROM:       testEventData.js
 */
 export const getEvents = async () => {
-    if(windows.location.href.startsWith('http://localhost')) {
+    if(window.location.href.startsWith('http://localhost')) {
         return testEventData;
     }
     
@@ -66,8 +72,11 @@ export const getEvents = async () => {
 
     if(token) {
         removeQuery();
-        const eventsURL = `https://iiyc8mchcj.execute-api.ap-northeast-3.amazonaws.com/dev/api/get-calendar-events/${token}`;
-        const response = await fetch(eventsURL);
+        const response = await fetch(`https://iiyc8mchcj.execute-api.ap-northeast-3.amazonaws.com/dev/api/get-calendar-events/${token}`);
+        if(!response.ok) {
+            console.error('Error while fetching events:', response.statusText);
+            return null;
+        }        
         const result = await response.json();
         if(result) {
             return result.events;
