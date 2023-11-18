@@ -59,6 +59,10 @@ const getToken = async (code) => {
     return access_token;
 };
 
+export const getTestEvents = async () => {
+    return testEventData;
+}
+
 /*
 *   FETCH:      data
 *   FROM:       testEventData.js

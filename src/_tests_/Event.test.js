@@ -1,5 +1,5 @@
 import {getByRole, queryByRole, render, screen} from '@testing-library/react';
-import Event from '../components/Event';
+import Event from '../components/Event/Event';
 import { getEvents, extractLocations } from '../api';
 import userEvent from '@testing-library/user-event';
 

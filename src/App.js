@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { extractLocations, getEvents } from './api';
-import CitySearch from './components/CitySearch';
-import EventList from './components/EventList';
-import NumberOfResults from './components/NumberOfResults';
+import CitySearch from './components/CitySearch/CitySearch';
+import EventList from './components/EventList/EventList';
+import NumberOfResults from './components/NumberOfResults/NumberOfResults';
 
 function App() {
 

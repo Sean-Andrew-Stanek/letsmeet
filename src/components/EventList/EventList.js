@@ -1,4 +1,4 @@
-import Event from './Event';
+import Event from '../Event/Event';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 
@@ -13,12 +13,13 @@ const EventList = ({events, resultCount, selectedCity}) => {
         let newFilteredEvents = events;
         let filterString = selectedCity;
 
-        if(selectedCity===allCitiesString)
+        if(selectedCity===allCitiesString || selectedCity==='')
             newFilteredEvents = events
         else
             newFilteredEvents = newFilteredEvents.filter((event) => (event.location === filterString));
         
-        newFilteredEvents = newFilteredEvents.slice(0,resultCount);
+        if(resultCount)
+            newFilteredEvents = newFilteredEvents.slice(0,resultCount);
         
         setFilteredEvents(newFilteredEvents);
     }, [resultCount, selectedCity, events]);
@@ -42,8 +43,8 @@ EventList.defaultProps = {
 
 EventList.propTypes = {
     events: PropTypes.array.isRequired,
-    resultCount: PropTypes.number.isRequired,
-    selectedCity: PropTypes.string.isRequired
+    resultCount: PropTypes.number,
+    selectedCity: PropTypes.string
 };
 
 export default EventList;
