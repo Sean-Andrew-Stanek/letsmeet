@@ -1,5 +1,5 @@
 
-import NumberOfResults from "../components/NumberOfResults";
+import NumberOfResults from "../components/NumberOfResults/NumberOfResults";
 import {render, waitFor} from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 

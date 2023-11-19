@@ -46,7 +46,7 @@ defineFeature(feature, test => {
         });
 
         then('the user should receive a list of cities from the data that match what they have typed', async() => {
-            const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem')
+            const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
             const allLocations = await extractLocations(await getEvents());
 
             const suggestions = allLocations ? allLocations.filter((location) => {
