@@ -26,7 +26,6 @@ describe('Show / Hide Event Details', () => {
         // if your event's details have a different selector, use it instead of .event .details
         const eventDetails = await page.$('.event .details');
         expect(eventDetails).toBeNull();
-        browser.close();
 
     });
 
@@ -35,7 +34,6 @@ describe('Show / Hide Event Details', () => {
         await page.click('.event .details-btn');
         const eventDetails = await page.$('.event .details');
         expect(eventDetails).toBeDefined();
-        browser.close();
 
     });
 
@@ -44,4 +42,5 @@ describe('Show / Hide Event Details', () => {
         const eventDetails = await page.$('.event .details');
         expect(eventDetails).toBeNull();
     })
+    
 });
