@@ -3,7 +3,7 @@
 
 /** @type {import('jest').Config} */
 const config = {
-    verbose: true,
+    verbose: false,
     collectCoverage: true,
     collectCoverageFrom: ['./src/**/*.js'],
   };

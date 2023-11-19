@@ -27,7 +27,7 @@ function App() {
         <div className="App">
             <CitySearch 
                 allLocations = {locations}
-                setSelectedCity = {(selectedCity) => setSelectedCity(selectedCity)}
+                setSelectedCity = {setSelectedCity}
                 />
             <NumberOfResults
                 numberOfResults = {(resultCount) => setResultCount(resultCount)}
