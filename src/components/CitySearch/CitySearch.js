@@ -8,16 +8,28 @@ const CitySearch = ( {allLocations, setSelectedCity}) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState(allLocations);
+    const [error, setError] = useState(false);
 
     const handleInputChanged = (event) => {
         let eventValue = event.target.value;
 
-        const filteredLocations = allLocations ? allLocations.filter((location) => {
-            return location.toLowerCase().indexOf(eventValue.toLowerCase()) > -1;
-        }) : [];
+        const regex = /^[a-zA-Z\s'-,]*$/;
 
-        setQuery(eventValue);
-        setSuggestions(filteredLocations);
+        setError(false);
+        if(regex.test(eventValue))
+        {
+            const filteredLocations = allLocations ? allLocations.filter((location) => {
+                return location.toLowerCase().indexOf(eventValue.toLowerCase()) > -1;
+            }) : [];
+    
+            setQuery(eventValue);
+            setSuggestions(filteredLocations);
+        }else{
+            setError(true);
+            setQuery(query);
+        }
+
+
     };
 
     const handleItemClicked = (event) => {
@@ -31,6 +43,7 @@ const CitySearch = ( {allLocations, setSelectedCity}) => {
 
     return (
         <div id="city-search">
+            {error&&<div style={{color:'red'}}>Invalid input</div>}
             <input
                 type="text"
                 className="city"
