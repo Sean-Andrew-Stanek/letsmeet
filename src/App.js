@@ -13,14 +13,14 @@ function App() {
     const [selectedCity, setSelectedCity] = useState('');
     const [events, setEvents] = useState([]);
     const [locations, setLocations] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const fetchData = async () => {
-        //setIsLoading(true);
+        setIsLoading(true);
         const allEvents = await getEvents();
         setLocations(await extractLocations(allEvents));
         setEvents(allEvents);
-        //setIsLoading(false);
+        setIsLoading(false);
     };
 
     useEffect(() => {
