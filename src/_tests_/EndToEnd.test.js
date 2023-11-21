@@ -8,9 +8,9 @@ describe('Show / Hide Event Details', () => {
 
     beforeAll(async () => {
         browser = await puppeteer.launch({
-/*             headless: false,
+            headless: false,
             slowMo: 100, //ms
-            timeout: 0 //hours */
+            timeout: 0 //hours
         });
         page = await browser.newPage();
         await page.goto('http://localhost:3000/');
