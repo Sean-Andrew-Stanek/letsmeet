@@ -4,6 +4,7 @@ import { extractLocations, getEvents } from './api';
 import CitySearch from './components/CitySearch/CitySearch';
 import EventList from './components/EventList/EventList';
 import NumberOfResults from './components/NumberOfResults/NumberOfResults';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 
 
 function App() {
@@ -12,14 +13,14 @@ function App() {
     const [selectedCity, setSelectedCity] = useState('');
     const [events, setEvents] = useState([]);
     const [locations, setLocations] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
-        setIsLoading(true);
+        //setIsLoading(true);
         const allEvents = await getEvents();
         setLocations(await extractLocations(allEvents));
         setEvents(allEvents);
-        setIsLoading(false);
+        //setIsLoading(false);
     };
 
     useEffect(() => {
@@ -31,7 +32,7 @@ function App() {
         isLoading?
             (
                 <div>
-                    Loading...
+                    <LoadingScreen />
                 </div>
             ):(
                 <div className="App">
