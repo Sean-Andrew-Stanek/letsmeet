@@ -20,10 +20,12 @@ const EventList = ({events, numberOfResults, selectedCity, setInfoAlert,}) => {
         
         if(numberOfResults){
             newFilteredEvents = newFilteredEvents.slice(0,numberOfResults);
-            setInfoAlert('');
+            if(setInfoAlert)
+                setInfoAlert('');
         }else{
             newFilteredEvents = [];
-            setInfoAlert('Please enter the number of events you want to see.')
+            if(setInfoAlert)
+                setInfoAlert('Please enter the number of events you want to see.')
         }
         
         setFilteredEvents(newFilteredEvents);

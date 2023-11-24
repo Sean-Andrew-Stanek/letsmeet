@@ -74,7 +74,7 @@ export const getEvents = async () => {
     }
 
     if(!navigator.onLine) {
-        const events = localStorage.getItems('offlineEvents');
+        const events = localStorage.getItem('offlineEvents');
         return events?JSON.parse(events):[]
     }
     

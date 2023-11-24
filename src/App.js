@@ -5,7 +5,7 @@ import CitySearch from './components/CitySearch/CitySearch';
 import EventList from './components/EventList/EventList';
 import NumberOfResults from './components/NumberOfResults/NumberOfResults';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
-import { InfoAlert, ErrorAlert } from './components/Alert/Alert'; 
+import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert/Alert'; 
 
 function App() {
 
@@ -16,8 +16,9 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [infoAlert, setInfoAlert] = useState('');
     const [errorAlert, setErrorAlert] = useState('');
+    const [onlineWarningAlert, setOnlineWarningAlert] = useState('');
 
-    const fetchData = async () => {
+    const fetchInitialData = async () => {
         setIsLoading(true);
         const allEvents = await getEvents();
         setLocations(await extractLocations(allEvents));
@@ -25,11 +26,30 @@ function App() {
         setIsLoading(false);
     };
 
+    const fetchData = async() => {
+        const allEvents = await getEvents();
+        setLocations(await extractLocations(allEvents));
+        setEvents(allEvents);
+    }
+
+    useEffect(() => {
+        fetchInitialData();
+    }, []);
+
     useEffect(() => {
         fetchData();
-    }, []);
-    
-    
+    }, [setOnlineWarningAlert])
+
+    //TODO: Put a permanent OnlineStatus rather than the event box
+    let offlineMessage = 'Currently Offline - Jump online for the newest events!'
+    window.addEventListener('online', () => {setOnlineWarningAlert('')});
+    window.addEventListener('offline', () => {
+        // seOnlineWarningAlert has a useEffect, so this avoids double-loading
+        if(!isLoading)
+            setOnlineWarningAlert(offlineMessage);
+    });
+
+
     return (
         isLoading?
             (
@@ -41,6 +61,8 @@ function App() {
                     <div className='alerts-container'>
                         { errorAlert.length ?
                             <ErrorAlert text={errorAlert} />
+                        : onlineWarningAlert.length ?
+                            <WarningAlert text={onlineWarningAlert} />
                         : infoAlert.length ? 
                             <InfoAlert text={infoAlert} />
                         : null}
