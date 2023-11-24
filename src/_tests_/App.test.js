@@ -1,4 +1,4 @@
-import {render, within} from '@testing-library/react';
+import {render, waitFor, within} from '@testing-library/react';
 import App from '../App';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
@@ -14,11 +14,17 @@ describe('<App /> component', () =>{
     });
 
     test('renders list of events', () => {
-        expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
+        waitFor(()=> {
+            expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
+        });
+
     });
 
     test('Render CitySearch', () => {
-        expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
+        waitFor(()=> {
+            expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
+        })
+
     });
 
     //WHEN USER:    Changes the NumberOfResults
@@ -49,17 +55,23 @@ describe('<App /> component', () =>{
 
     test('Changing the CitySearch will yield a list with results that only contain the search', async() => {
         const user = userEvent.setup();
-        
+        let citySearchTextbox, norTextbox, CitySearchDOM;
         //AT START
         //COMP:         CitySearch
-        const CitySearchDOM = AppDOM.querySelector('#city-search');
-        const citySearchTextbox = within(CitySearchDOM).queryByRole('textbox');
+        await waitFor(() => {
+            CitySearchDOM = AppDOM.querySelector('#city-search');
+            citySearchTextbox = within(CitySearchDOM).queryByRole('textbox');
+        });
+
 
         const allEvents = await getEvents();
 
         //USER:         Allows 9999 results
-        const NumberOfResultsDOM = AppDOM.querySelector('#number-of-results');
-        const norTextbox = within(NumberOfResultsDOM).queryByRole('textbox');
+        await waitFor(() => {
+            const NumberOfResultsDOM = AppDOM.querySelector('#number-of-results');
+            norTextbox = within(NumberOfResultsDOM).queryByRole('textbox');
+        });
+
         await user.type(norTextbox, '{backspace}{backspace}9999');
         expect(norTextbox).toHaveValue('9999');
 

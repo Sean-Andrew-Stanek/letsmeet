@@ -13,16 +13,20 @@ defineFeature(feature, test => {
         //Components we need to look at
         let AppComponent, AppDOM, EventListDOM;
 
-        given('the user navigates to the events page', () => {
+        given('the user navigates to the events page', async() => {
             AppComponent = render(<App />);
             AppDOM = AppComponent.container.firstChild;
-            EventListDOM = AppDOM.querySelector('#event-list')
+            await waitFor( () => {
+                EventListDOM = AppDOM.querySelector('#event-list')
+                expect(EventListDOM).toBeInTheDocument();
+            })
         });
 
         then('each event element should be collapsed by default', async() => {
             
             let allEvents;
             await waitFor(()=> {
+                
                 allEvents = within(EventListDOM).queryAllByRole('listitem');
                 expect(allEvents.length).toBeGreaterThanOrEqual(1);
             })
@@ -42,10 +46,12 @@ defineFeature(feature, test => {
             AppComponent = render(<App />);
             AppDOM = AppComponent.container.firstChild;
 
-            const EventListDOM = AppDOM.querySelector('#event-list');
+
             let EventListItems;
 
             await waitFor(() => {
+                const EventListDOM = AppDOM.querySelector('#event-list');
+
                 EventListItems = within(EventListDOM).queryAllByRole('listitem');
                 expect(EventListItems.length).toBeGreaterThan(0);
             });
@@ -74,10 +80,10 @@ defineFeature(feature, test => {
             AppComponent = render(<App />);
             AppDOM = AppComponent.container.firstChild;
 
-            const EventListDOM = AppDOM.querySelector('#event-list');
             let EventListItems;
-
+            
             await waitFor(() => {
+                const EventListDOM = AppDOM.querySelector('#event-list');
                 EventListItems = within(EventListDOM).queryAllByRole('listitem');
                 expect(EventListItems.length).toBeGreaterThan(0);
             });

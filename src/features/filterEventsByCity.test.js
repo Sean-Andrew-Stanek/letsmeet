@@ -20,9 +20,9 @@ defineFeature(feature, test => {
 
         then('the user should see the list of upcoming events', async() => {
             const AppDOM = AppComponent.container.firstChild;
-            const EventListDOM = AppDOM.querySelector('#event-list');
-            
             await waitFor(() => {
+
+                const EventListDOM = AppDOM.querySelector('#event-list');
                 const EventListItems = within(EventListDOM).queryAllByRole('listitem');
                 expect(EventListItems.length).toBe(32);
             });
@@ -40,7 +40,11 @@ defineFeature(feature, test => {
         when('the user begins typing in the city-search textbox', async() => {
             const user = userEvent.setup();
             const AppDOM = AppComponent.container.firstChild;
-            CitySearchDOM = AppDOM.querySelector('#city-search');
+            await waitFor(() => {
+                CitySearchDOM = AppDOM.querySelector('#city-search');
+                expect(CitySearchDOM).toBeInTheDocument();
+            })
+            
             const citySearchInput = within(CitySearchDOM).queryByRole('textbox');
             await user.type(citySearchInput, 'Ber');
         });
@@ -70,7 +74,10 @@ defineFeature(feature, test => {
             AppComponent = render(<App />);
             const user = userEvent.setup();
             AppDOM = AppComponent.container.firstChild;
-            CitySearchDOM = AppDOM.querySelector('#city-search');
+            await waitFor( () => {
+                CitySearchDOM = AppDOM.querySelector('#city-search');
+                expect(CitySearchDOM).toBeInTheDocument();
+            })
             citySearchInput = within(CitySearchDOM).queryByRole('textbox');
             await user.type(citySearchInput, 'Ber');
         });

@@ -22,10 +22,9 @@ defineFeature(feature, test => {
         });
 
         then('the default max number of events should be displayed', async() => {
-
-            const EventListDOM = AppDOM.querySelector('#event-list');
-            
-            await waitFor(() => {
+            await waitFor(() => {          
+                const EventListDOM = AppDOM.querySelector('#event-list');
+    
                 const EventListItems = within(EventListDOM).queryAllByRole('listitem');
                 expect(EventListItems.length).toBe(32);
             });
@@ -44,18 +43,33 @@ defineFeature(feature, test => {
         when('the user specifies a new number of events to be displayed', async() => {
           
           const user = userEvent.setup();
-          
+          let NumberOfResultsDOM;
+
+          await waitFor(() => {
+            NumberOfResultsDOM = AppDOM.querySelector('#number-of-results');
+            expect (NumberOfResultsDOM).toBeInTheDocument();
+          })
+
           //Enter 10 into the textbox
-          const NumberOfResultsDOM = AppDOM.querySelector('#number-of-results');
-          const norTextbox = within(NumberOfResultsDOM).queryByRole('textbox');
+          let norTextbox;
+          await waitFor(() => {
+            norTextbox = within(NumberOfResultsDOM).getByRole('textbox');
+            expect(norTextbox).toBeInTheDocument();
+          })
+
           await user.type(norTextbox, '{backspace}{backspace}10');
           expect(norTextbox).toHaveValue('10');
+
     
         });
     
         then('the page should display the specified number of events', async() => {
+          let EventListDOM;
           //There should be 10 events
-          const EventListDOM = AppDOM.querySelector('#event-list');
+          waitFor(() => {
+            EventListDOM = AppDOM.querySelector('#event-list');
+            expect(EventListDOM).toBeInTheDocument();
+          })
           let allRenderedEvents;
           await waitFor(() => {
             allRenderedEvents = within(EventListDOM).queryAllByRole('listitem');

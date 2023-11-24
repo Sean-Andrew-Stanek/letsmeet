@@ -5,7 +5,7 @@ import CitySearch from './components/CitySearch/CitySearch';
 import EventList from './components/EventList/EventList';
 import NumberOfResults from './components/NumberOfResults/NumberOfResults';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
-
+//import { InfoAlert } from './components/Alert/Alert'; 
 
 function App() {
 
@@ -14,6 +14,7 @@ function App() {
     const [events, setEvents] = useState([]);
     const [locations, setLocations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    //const [infoAlert, setInfoAlert] = useState('');
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -26,6 +27,11 @@ function App() {
     useEffect(() => {
         fetchData();
     }, []);
+    {/* <div className='alerts-container'>
+        {infoAlert.length &&
+            <InfoAlert text={infoAlert} />
+        }
+    </div> */}
     
     
     return (

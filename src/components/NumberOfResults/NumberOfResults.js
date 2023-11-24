@@ -13,7 +13,7 @@ const NumberOfResults = ({numberOfResults}) => {
         setError(false);
         if(!returnValue)
         {
-            returnValue=32;
+            returnValue=0;
             setError(true);
         }
         numberOfResults(returnValue);
