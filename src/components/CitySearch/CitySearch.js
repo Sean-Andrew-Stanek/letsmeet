@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const CitySearch = ( {allLocations, setSelectedCity}) => {
+const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert}) => {
 
     const allCitiesString = 'See All Cities';
     
@@ -21,6 +21,10 @@ const CitySearch = ( {allLocations, setSelectedCity}) => {
             const filteredLocations = allLocations ? allLocations.filter((location) => {
                 return location.toLowerCase().indexOf(eventValue.toLowerCase()) > -1;
             }) : [];
+
+            if(filteredLocations.length === 0) {
+                setInfoAlert('We can not find the city you are looking for.  Please try another city.')
+            }
     
             setQuery(eventValue);
             setSuggestions(filteredLocations);
@@ -74,4 +78,5 @@ const CitySearch = ( {allLocations, setSelectedCity}) => {
  CitySearch.propTypes = {
     allLocations: PropTypes.array.isRequired,
     setSelectedCity: PropTypes.func,
+    setInfoAlert: PropTypes.func
  }
