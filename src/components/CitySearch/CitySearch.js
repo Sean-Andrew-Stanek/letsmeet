@@ -21,17 +21,20 @@ const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert, setErrorAlert
                 return location.toLowerCase().indexOf(eventValue.toLowerCase()) > -1;
             }) : [];
 
-            if(filteredLocations.length === 0) {
-                setInfoAlert('We can not find the city you are looking for.  Please try another city.')
-            }else{
-                setInfoAlert('');
+            if(setInfoAlert){
+                if(filteredLocations.length === 0) {
+                    setInfoAlert('We can not find the city you are looking for.  Please try another city.')
+                }else{
+                    if(setInfoAlert)
+                        setInfoAlert('');
+                }
             }
     
             setQuery(eventValue);
             setSuggestions(filteredLocations);
         }else{
-            setErrorAlert('Please use letters, spaces, dashes or apostrophies')
-            setError(true);
+            if(setErrorAlert)
+                setErrorAlert('Please use letters, spaces, dashes or apostrophies')
             setQuery(query);
         }
 
