@@ -5,16 +5,17 @@ import CitySearch from './components/CitySearch/CitySearch';
 import EventList from './components/EventList/EventList';
 import NumberOfResults from './components/NumberOfResults/NumberOfResults';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
-import { InfoAlert } from './components/Alert/Alert'; 
+import { InfoAlert, ErrorAlert } from './components/Alert/Alert'; 
 
 function App() {
 
-    const [resultCount, setResultCount] = useState(32);
+    const [numberOfResults, setNumberOfResults] = useState(32);
     const [selectedCity, setSelectedCity] = useState('');
     const [events, setEvents] = useState([]);
     const [locations, setLocations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [infoAlert, setInfoAlert] = useState('');
+    const [errorAlert, setErrorAlert] = useState('');
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -38,22 +39,26 @@ function App() {
             ):(
                 <div className="App">
                     <div className='alerts-container'>
-                        {infoAlert.length &&
+                        { errorAlert.length ?
+                            <ErrorAlert text={errorAlert} />
+                        : infoAlert.length ? 
                             <InfoAlert text={infoAlert} />
-                        }
+                        : null}
                     </div>
                     <CitySearch 
                         allLocations = {locations}
                         setSelectedCity = {setSelectedCity}
                         setInfoAlert = {setInfoAlert}
+                        setErrorAlert = {setErrorAlert}
                         />
                     <NumberOfResults
-                        numberOfResults = {(resultCount) => setResultCount(resultCount)}
+                        setNumberOfResults = {setNumberOfResults}
                     />
                     <EventList 
                         events = {events}
-                        resultCount = {resultCount}
-                        selectedCity = {selectedCity}/>
+                        numberOfResults = {numberOfResults}
+                        selectedCity = {selectedCity}
+                        setInfoAlert = {setInfoAlert}/>
                 </div>
             )
     );

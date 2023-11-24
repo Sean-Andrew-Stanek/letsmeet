@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 
 
-const EventList = ({events, resultCount, selectedCity}) => {
+const EventList = ({events, numberOfResults, selectedCity, setInfoAlert,}) => {
     
     const allCitiesString = 'See All Cities';
 
-    let [filteredEvents, setFilteredEvents] = useState(events.slice(0,resultCount));
+    let [filteredEvents, setFilteredEvents] = useState(events.slice(0,numberOfResults));
 
     useEffect(() => {
         let newFilteredEvents = events;
@@ -18,11 +18,16 @@ const EventList = ({events, resultCount, selectedCity}) => {
         else
             newFilteredEvents = newFilteredEvents.filter((event) => (event.location === filterString));
         
-        if(resultCount)
-            newFilteredEvents = newFilteredEvents.slice(0,resultCount);
+        if(numberOfResults){
+            newFilteredEvents = newFilteredEvents.slice(0,numberOfResults);
+            setInfoAlert('');
+        }else{
+            newFilteredEvents = [];
+            setInfoAlert('Please enter the number of events you want to see.')
+        }
         
         setFilteredEvents(newFilteredEvents);
-    }, [resultCount, selectedCity, events]);
+    }, [numberOfResults, selectedCity, events, setInfoAlert]);
 
     return (
         <div 
@@ -43,8 +48,9 @@ EventList.defaultProps = {
 
 EventList.propTypes = {
     events: PropTypes.array.isRequired,
-    resultCount: PropTypes.number,
-    selectedCity: PropTypes.string
+    numberOfResults: PropTypes.number,
+    selectedCity: PropTypes.string,
+    setInfoAlert: PropTypes.func,
 };
 
 export default EventList;

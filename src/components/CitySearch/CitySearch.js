@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert}) => {
+const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert, setErrorAlert}) => {
 
     const allCitiesString = 'See All Cities';
     
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [query, setQuery] = useState("");
     const [suggestions, setSuggestions] = useState(allLocations);
-    const [error, setError] = useState(false);
 
     const handleInputChanged = (event) => {
         let eventValue = event.target.value;
 
         const regex = /^[a-zA-Z\s'-,]*$/;
 
-        setError(false);
+        //setErrorAlert('');
         if(regex.test(eventValue))
         {
             const filteredLocations = allLocations ? allLocations.filter((location) => {
@@ -24,11 +23,14 @@ const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert}) => {
 
             if(filteredLocations.length === 0) {
                 setInfoAlert('We can not find the city you are looking for.  Please try another city.')
+            }else{
+                setInfoAlert('');
             }
     
             setQuery(eventValue);
             setSuggestions(filteredLocations);
         }else{
+            setErrorAlert('Please use letters, spaces, dashes or apostrophies')
             setError(true);
             setQuery(query);
         }
@@ -47,7 +49,6 @@ const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert}) => {
 
     return (
         <div id="city-search">
-            {error&&<div style={{color:'red'}}>Invalid input</div>}
             <input
                 type="text"
                 className="city"
@@ -78,5 +79,6 @@ const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert}) => {
  CitySearch.propTypes = {
     allLocations: PropTypes.array.isRequired,
     setSelectedCity: PropTypes.func,
-    setInfoAlert: PropTypes.func
+    setInfoAlert: PropTypes.func,
+    setErrorAlert: PropTypes.func
  }
