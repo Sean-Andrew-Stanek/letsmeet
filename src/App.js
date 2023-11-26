@@ -7,6 +7,7 @@ import NumberOfResults from './components/NumberOfResults/NumberOfResults';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert/Alert'; 
 import CityEventChart from './components/CityEventsChart/CityEventsChart';
+import ChartPie from './components/ChartPie/ChartPie';
 
 function App() {
 
@@ -58,39 +59,52 @@ function App() {
                     <LoadingScreen />
                 </div>
             ):(
-                <div className="App">
-                    <h1>Meet App</h1>
-                    <div className='alerts-container'>
-                        { errorAlert.length ?
-                            <ErrorAlert text={errorAlert} />
-                        : onlineWarningAlert.length ?
-                            <WarningAlert text={onlineWarningAlert} />
-                        : infoAlert.length ? 
-                            <InfoAlert text={infoAlert} />
-                        : null}
-                    </div>
-                    <CitySearch 
-                        allLocations = {locations}
-                        setSelectedCity = {setSelectedCity}
-                        setInfoAlert = {setInfoAlert}
-                        setErrorAlert = {setErrorAlert}
+                <>
+                    
+                    <div className="App">
+                        {/* TiITLE */}
+                        <h1 className='title'>Meet App</h1>
+                        {/* ALERT */}
+                        <div className='alerts-container'>
+                            { errorAlert.length ?
+                                <ErrorAlert text={errorAlert} />
+                            : onlineWarningAlert.length ?
+                                <WarningAlert text={onlineWarningAlert} />
+                            : infoAlert.length ? 
+                                <InfoAlert text={infoAlert} />
+                            : null}
+                        </div>
+                        {/* SEARCH BAR - CITY */}
+                        <CitySearch 
+                            allLocations = {locations}
+                            setSelectedCity = {setSelectedCity}
+                            setInfoAlert = {setInfoAlert}
+                            setErrorAlert = {setErrorAlert}
                         />
-                    <NumberOfResults
-                        setNumberOfResults = {setNumberOfResults}
-                    />
-                    <CityEventChart 
-                        allLocations={locations}
-                        events={events}
-                    />
-                    <div className='charts-container'>
+                        {/* INPUT - # of CITIES */}
+                        <NumberOfResults
+                            setNumberOfResults = {setNumberOfResults}
+                        />
+                        {/* CHARTS */}
+                        <div className='charts-container'>
+                            <CityEventChart 
+                                allLocations={locations}
+                                events={events}
+                            />
+                            <ChartPie 
+                                events={events}                 
+                            />
+                        </div>
+                        {/* EVENTS */}
                         <EventList 
                             events = {events}
                             numberOfResults = {numberOfResults}
                             selectedCity = {selectedCity}
                             setInfoAlert = {setInfoAlert}
                         />
+                        
                     </div>
-                </div>
+                </>
             )
     );
 }
