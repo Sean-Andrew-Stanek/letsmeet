@@ -4,18 +4,10 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 
 
 
-const CityEventChart = ({allLocations, events}) => {
+const ChartPie = ({allLocations, events}) => {
     
-    const [data, setData] = useState([]);
+   /*  const [data, setData] = useState([]);
     
-/*     const getData = () => {
-        const data = allLocations.map((location) => {
-            const count = events.filter((event) => event.location === location).length;
-            const city = location.split(', ')[0];
-            return {city, count};
-        })
-        return data;
-    }; */
 
     useEffect(() => {
         setData(()=>{
@@ -63,7 +55,7 @@ const CityEventChart = ({allLocations, events}) => {
                 />
             </ScatterChart>
         </ResponsiveContainer>
-    )
+    ) */
 }
 
-export default CityEventChart;
+export default ChartPie;

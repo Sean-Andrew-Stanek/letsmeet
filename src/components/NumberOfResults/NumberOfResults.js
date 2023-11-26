@@ -14,7 +14,8 @@ const NumberOfResults = ({setNumberOfResults}) => {
 
         if(!returnValue)
             returnValue = 0;
-        setNumberOfResults(returnValue);
+        if(setNumberOfResults)
+            setNumberOfResults(returnValue);
         setInputText(returnValue);
     }
 

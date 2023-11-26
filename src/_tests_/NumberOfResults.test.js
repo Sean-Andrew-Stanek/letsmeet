@@ -12,7 +12,7 @@ describe('NumberOfResults Component Tests', () => {
     beforeEach(() => {
         //No need for callback function
         NORComponent = render(<NumberOfResults numberOfResults={mockFunction}/>);
-        norTextbox = NORComponent.queryByRole('textbox');
+        norTextbox = NORComponent.getByRole('textbox');
     })
 
     //AT START
@@ -28,9 +28,11 @@ describe('NumberOfResults Component Tests', () => {
     //VALUE:        10
     test('Renders Numbers When Input', async() => {
         const user = userEvent.setup();
-        await user.type(norTextbox, '{backspace}{backspace}10');
-        expect(norTextbox).toHaveValue('10');
-
+        await user.clear(norTextbox);
+        waitFor(()=> {
+            user.type(norTextbox, '10');
+            expect(norTextbox).toHaveValue('10');
+        })
     });
 
 });

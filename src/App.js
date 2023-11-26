@@ -82,11 +82,14 @@ function App() {
                         allLocations={locations}
                         events={events}
                     />
-                    <EventList 
-                        events = {events}
-                        numberOfResults = {numberOfResults}
-                        selectedCity = {selectedCity}
-                        setInfoAlert = {setInfoAlert}/>
+                    <div className='charts-container'>
+                        <EventList 
+                            events = {events}
+                            numberOfResults = {numberOfResults}
+                            selectedCity = {selectedCity}
+                            setInfoAlert = {setInfoAlert}
+                        />
+                    </div>
                 </div>
             )
     );
