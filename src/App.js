@@ -6,6 +6,7 @@ import EventList from './components/EventList/EventList';
 import NumberOfResults from './components/NumberOfResults/NumberOfResults';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert/Alert'; 
+import CityEventChart from './components/CityEventsChart/CityEventsChart';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
                 </div>
             ):(
                 <div className="App">
+                    <h1>Meet App</h1>
                     <div className='alerts-container'>
                         { errorAlert.length ?
                             <ErrorAlert text={errorAlert} />
@@ -75,6 +77,10 @@ function App() {
                         />
                     <NumberOfResults
                         setNumberOfResults = {setNumberOfResults}
+                    />
+                    <CityEventChart 
+                        allLocations={locations}
+                        events={events}
                     />
                     <EventList 
                         events = {events}
