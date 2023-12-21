@@ -14,7 +14,7 @@ const CitySearch = ( {allLocations, setSelectedCity, setInfoAlert, setErrorAlert
 
         const regex = /^[a-zA-Z\s'-,]*$/;
 
-        //setErrorAlert('');
+        //Tests for acceptable inputs
         if(regex.test(eventValue))
         {
             const filteredLocations = allLocations ? allLocations.filter((location) => {
